@@ -17,14 +17,26 @@ const bottom_tabs = constants.bottom_tabs.map((bottom_tab) =>({
 }))
 
 const TabIndicator = ({measureLayout, scrollX}) =>{
+
+    const inputRange = bottom_tabs.map((_, i) => i * SIZES.width)
+
+    const tabIndicatorWidth = scrollX.interpolate({
+        inputRange,
+        outputRange: measureLayout.map(measure => measure.width)
+    })
+
+    const translateX = scrollX.interpolate({
+        inputRange,
+        outputRange: measureLayout.map(measure => measure.x)
+    })
     return(
         <Animated.View
-        style={{ position: 'absolute', left: 0, height: '100%', width:80, 
-        borderRadius: SIZES.radius, backgroundColor: COLORS.primary}}/>
+        style={{ position: 'absolute', left: 0, height: '100%', width:tabIndicatorWidth, 
+        borderRadius: SIZES.radius, backgroundColor: COLORS.primary, transform:[{ translateX}]}}/>
     )
 }
 
-const Tabs = ({scrollX})=> {
+const Tabs = ({scrollX, onBottomTabPress})=> {
 
     const containerRef = React.useRef()
     const [measureLayout, setMeasureLayout] = React.useState([])
@@ -50,7 +62,7 @@ const Tabs = ({scrollX})=> {
 
 
     return(
-    <View style={{flex: 1, flexDirection: 'row'}}>
+    <View ref ={containerRef} style={{flex: 1, flexDirection: 'row'}}>
 
         {/* Tab Indicator */}
 
@@ -63,7 +75,9 @@ const Tabs = ({scrollX})=> {
         {bottom_tabs.map((item, index) =>{
             return (
                 <Pressable key={`BottomTab-${index}`} ref={item.ref} 
-                style={{flex:1, paddingHorizontal:15,alignItems:'center', justifyContent: 'center'}}>
+                style={{flex:1, paddingHorizontal:15,
+                alignItems:'center', justifyContent: 'center'}}
+                onPress={() => onBottomTabPress(index)}>
 
                     <Image source={item.icon} resizeMode="contain" style={{width: 25, height: 25}}/>
                     <Text style={{marginTop: 3, color: COLORS.white}}>
@@ -85,6 +99,12 @@ const MainLayout = () => {
     const flatListRef = React.useRef()
     const scrollX = React.useRef(new Animated.Value(0)).current;
 
+    const onBottomTabPress = React.useCallback(bottomTabIndex =>{
+        flatListRef?.current?.scrollToOffset({
+            offset: bottomTabIndex * SIZES.width
+        })
+    })
+
     function renderContent() {
         return (
             <View style={{
@@ -94,6 +114,7 @@ const MainLayout = () => {
                     ref={flatListRef}
                     horizontal
                     pagingEnabled
+                    scrollEnabled={false}
                     snapToAlignment='center'
                     snapToInterval={SIZES.width}
                     decelerationRate='fast'
@@ -137,7 +158,9 @@ const MainLayout = () => {
 
                     <View style={{flex: 1, borderRadius: SIZES.radius, backgroundColor: COLORS.primary3}}>
 
-                        <Tabs scrollX={scrollX}/>
+                        <Tabs scrollX={scrollX}
+                        onBottomTabPress={onBottomTabPress}
+                        />
 
                     </View>
 
