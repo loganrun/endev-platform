@@ -39,12 +39,40 @@ const Home = () => {
             </View>
         )
     }
+
+    function renderStartLearning(){
+        return (
+            <ImageBackground
+            source={images.featured_bg_image}
+            style={{alignItems: 'flex-start',
+                    marginTop: SIZES.padding,
+                    marginHorizontal: SIZES.padding,
+                    padding: 15
+            }}
+
+            imageStyle={{borderRadius: SIZES.radius}}
+            >
+
+            </ImageBackground>
+        )
+    }
+
     return (
         <View style={{flex: 1, backgroundColor:COLORS.white}}>
             {/* Header */}
             {renderHeader()}
 
             {/* Content */}
+            <ScrollView
+            contentContainerStyle={{
+                paddingBottom: 150
+            }}
+            showsVerticalScrollIndicator={false}
+            >
+                {/* Start Learning */}
+                {renderStartLearning()}
+
+            </ScrollView>
         </View>
     )
 }
