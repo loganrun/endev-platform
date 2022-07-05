@@ -1,10 +1,10 @@
-import { Text, Passable, ImageBackground } from 'react-native'
+import { Text, Pressable, ImageBackground } from 'react-native'
 import React from 'react'
 import { COLORS, SIZES} from '../../constants';
 
 const CategoryCard = ({category, containerStyle}) => {
   return (
-    <Passable>
+    <Pressable>
         <ImageBackground
         source={category?.thumbnail}
         resizeMode="cover"
@@ -18,8 +18,18 @@ const CategoryCard = ({category, containerStyle}) => {
         }}
         >
 
+        <Text 
+        style={{
+            color: COLORS.white,
+            fontSize: 20,
+            fontWeight: '900'
+        }}
+        >
+            {category?.title}
+        </Text>
+
         </ImageBackground>
-    </Passable>
+    </Pressable>
   )
 }
 

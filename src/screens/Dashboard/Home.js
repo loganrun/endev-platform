@@ -7,7 +7,7 @@ import {
     ScrollView
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import {IconButton, TextButton,VerticalCourseCard, LineDivider, CategoryCard} from '../../components'
+import {IconButton, TextButton,VerticalCourseCard, LineDivider, CategoryCard, HorizontalCourseCard} from '../../components'
 
 import { COLORS,FONTS, SIZES,icons,
         images, dummyData} from '../../../constants';
@@ -202,6 +202,38 @@ const Home = () => {
         )
     }
 
+    function renderPopularCourses(){
+        return(
+        <Section
+        title='Popular Courses'
+        containerStyle={{
+            marginTop: 30
+        }}
+        >
+            <FlatList
+                data={dummyData.courses_list_2}
+                listKey='PopularCourses'
+                scrollEnabled={false}
+                keyExtractor={item => `PopularCourse-${item.id}`}
+                contentContainerStyle={{
+                    marginTop: SIZES.radius,
+                    paddingHorizontal: SIZES.padding
+                }}
+                renderItem={({item, index})=>(
+                    <HorizontalCourseCard
+                    course={item}
+                    containerStyle={{
+                        marginVertical: SIZES.padding,
+                        marginTop: index == 0 ? SIZES.radius : SIZES.padding
+                    }}
+                    />
+
+                )}
+            />
+
+        </Section>
+    )}
+
     return (
         <View style={{flex: 1, backgroundColor:COLORS.white}}>
             {/* Header */}
@@ -227,6 +259,8 @@ const Home = () => {
 
                 {/* Categories */}
                 {renderCategories()}
+                {/* Popular Courses */}
+                {renderPopularCourses()}
 
             </ScrollView>
         </View>
