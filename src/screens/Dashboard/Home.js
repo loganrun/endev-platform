@@ -227,7 +227,13 @@ const Home = () => {
                         marginTop: index == 0 ? SIZES.radius : SIZES.padding
                     }}
                     />
-
+                )}
+                ItemSeparatorComponent={()=>(
+                    <LineDivider
+                    lineStyle={{
+                        backgroundColor: COLORS.gray20
+                    }}
+                    />
                 )}
             />
 

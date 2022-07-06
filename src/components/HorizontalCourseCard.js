@@ -1,6 +1,7 @@
 import { View, Text, Image, ImageBackground, Pressable } from 'react-native'
 import React from 'react'
 import { COLORS, SIZES, icons} from '../../constants';
+import IconLabel from './IconLabel';
 
 const HorizontalCourseCard = ({containerStyle, course}) => {
   return (
@@ -61,12 +62,93 @@ const HorizontalCourseCard = ({containerStyle, course}) => {
             <Text
             style={{
                 fontSize: 18,
-                fontWeight: '900'
+                fontWeight: '900',
+                lineHeight: 22
             }}
             >
                 {course.title}
 
             </Text>
+
+            {/* Instructions and Duration */}
+            <View
+                Style={{
+                    flexDirection:'row',
+                    alignItems: 'center',
+                    marginTop: SIZES.base
+                }}
+            >
+                <Text
+                style={{
+                    fontSize: 14,
+                    lineHeight: 22,
+                    fontWeight: '400'
+            
+                }}
+                >
+                By {course.instructor}
+                </Text>
+                <IconLabel
+                    icon={icons.time}
+                    label={course.duration}
+                    containerStyle={{
+                        marginLeft: SIZES.base,
+                        position: 'absolute',
+                        right: 10
+                    }}
+                    iconStyle={{
+                        width:15,
+                        height: 15
+
+                    }}
+                    labelStyle={{
+                        fontSize: 14,
+                        lineHeight: 22,
+                        fontWeight: '400'
+                    }}
+                />
+
+            </View>
+
+            {/* Price & Ratings */}
+
+            <View
+            style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: SIZES.base
+            }}
+            >
+                <Text
+                style={{
+                   fontSize: 22,
+                   lineHeight: 30,
+                   color: COLORS.primary
+                }}
+                >
+                    ${course.price.toFixed(2)}
+                </Text>
+
+                <IconLabel
+                    icon={icons.star}
+                    label={course.ratings}
+                    containerStyle={{
+                        marginLeft: SIZES.base
+                    }}
+                    iconStyle={{
+                        width: 15,
+                        height: 15,
+                        tintColor: COLORS.primary2
+                    }}
+                    labelStyle={{
+                        marginLeft: 5,
+                        color: COLORS.black,
+                        fontSize: 16,
+                        lineHeight: 22
+                    }}
+                />
+
+            </View>
 
         </View>
 
