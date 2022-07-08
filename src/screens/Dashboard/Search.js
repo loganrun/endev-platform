@@ -126,17 +126,28 @@ const Search = () => {
     }
 
     function renderSearchBar(){
+
+        const inputRange = [0, 55];
+
+        const searchBarAnimatedStyle = useAnimatedStyle(() =>{
+            return{
+                height: interpolate(scrollY.value, inputRange,
+                    [55,0], Extrapolate.CLAMP),
+                opacity: interpolate(scrollY.value, inputRange,
+                    [1,0], Extrapolate.CLAMP)
+            }
+        })
         return (
             <Animated.View
-                style={{
-                    position: 'relative',
-                    // top:0,
-                    // left:0,
-                    // right: 0,
+                style={[{
+                    position: 'absolute',
+                    top:50,
+                    left:0,
+                    right: 0,
                     paddingHorizontal: SIZES.padding,
                     height: 50,
                     marginTop: SIZES.padding
-                }}
+                }, searchBarAnimatedStyle]}
             >
                 <Shadow>
                     <View
@@ -195,29 +206,34 @@ const Search = () => {
             <Animated.ScrollView
             ref = {scrollViewRef}
             contentContainerStyle={{
-                marginTop: 50,
+                marginTop: 150,
                 paddingBottom: 300
             }}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle={16}
             keyboardDismissMode='on-drag'
             onScroll={onScroll}
-            //onScrollEndDrag
+            onScrollEndDrag={(event) => {
+                if (event.nativeEvent.contentOffset.y > 10 &&
+                    event.nativeEvent.contentOffset.y < 50) {
+                    scrollViewRef.current?.scrollTo({
+                        x:0,
+                        y:60,
+                        Animated: true
+                    })
+                    }
+            }}
             >
                 
-                {/* Render Search Bar */}
-                {renderSearchBar()}
                 {/* Top Searches */}
-
                 {renderTopSearches()}
 
                 {/* Browse Categories */}
-
                 {renderBrowseCategories()}
-
-                
-
             </Animated.ScrollView>
+
+            {/* Render Search Bar */}
+            {renderSearchBar()}
         </View>
     )
 }
