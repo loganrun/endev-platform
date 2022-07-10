@@ -34,6 +34,48 @@ const ProfileValue = ({icon, label,value, onPress}) => {
 
         </View>
 
+        {/* label & Value */}
+
+        <View
+        style={{
+            flex: 1,
+            marginLeft: SIZES.radius
+        }}
+        >
+            {label &&
+                <Text
+                style={{
+                    color: COLORS.gray30,
+                    fontSize: 16,
+                    lineHeight: 22
+                }}
+                >
+                    {label}
+
+                </Text>
+            }
+
+            <Text
+            style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                lineHeight: 22
+            }}
+            >
+                {value}
+            </Text>
+
+        </View>
+        {/* Icon */}
+        <Image
+        source={icons.right_arrow}
+        style={{
+            weight:15,
+            height:15
+        }}
+        />
+
+
     </Pressable>
   )
 }
