@@ -253,26 +253,7 @@ const Profile = () => {
                     setStudyReminder(!studyReminder)
                 }}
                 />
-                <LineDivider/>
-
-<ProfileRadioButton
-icon={icons.reminder}
-label='Study Reminder'
-isSelected={studyReminder}
-onPress={() =>{
-    setStudyReminder(!studyReminder)
-}}
-/>
-<LineDivider/>
-
-                <ProfileRadioButton
-                icon={icons.reminder}
-                label='Study Reminder'
-                isSelected={studyReminder}
-                onPress={() =>{
-                    setStudyReminder(!studyReminder)
-                }}
-                />                            
+                <LineDivider/>                      
             </View>
         )
     }
