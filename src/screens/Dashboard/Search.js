@@ -15,11 +15,12 @@ import Animated, {
     useAnimatedStyle,
     useSharedValue
 } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import {TextButton, CategoryCard} from '../../components'
 import {COLORS, FONTS, SIZES, icons, dummyData } from '../../../constants'
 
 const Search = () => {
+    const navigation = useNavigation()
     const scrollViewRef = React.useRef()
 
     const scrollY = useSharedValue(0)
@@ -111,6 +112,7 @@ const Search = () => {
                 }}
                 renderItem={({item,index}) => (
                     <CategoryCard
+                    SharedElementPrefix='Search'
                     category={item}
                     containerStyle={{
                         height: 130,
@@ -118,8 +120,11 @@ const Search = () => {
                         marginTop: SIZES.radius,
                         marginLeft: (index + 1) % 2 == 0 ? SIZES.radius : SIZES.padding
                     }}
+                    onPress={()=> navigation.navigate
+                        ("CourseListing",{ category: item, SharedElementPrefix: 'Search'})}
                     />
                 )}
+            
                 />
         </View>
     ) 

@@ -5,7 +5,7 @@ import { COLORS, SIZES, icons } from '../../constants';
 import IconLabel from './IconLabel';
 
 const VerticalCourseCard = ({containerStyle, course}) => {
-  return (
+return (
     <Pressable
     style={{
         width: 270,
@@ -82,7 +82,7 @@ const VerticalCourseCard = ({containerStyle, course}) => {
         
 
     </Pressable>
-  )
+)
 }
 
 export default VerticalCourseCard

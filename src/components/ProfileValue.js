@@ -70,7 +70,7 @@ const ProfileValue = ({icon, label,value, onPress}) => {
         <Image
         source={icons.right_arrow}
         style={{
-            weight:15,
+            width:15,
             height:15
         }}
         />
