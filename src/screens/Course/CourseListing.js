@@ -10,23 +10,112 @@ import Animated, {
     withTiming,
     runOnJS,
 } from 'react-native-reanimated';
-import { useRoute } from '@react-navigation/native';
 import {SharedElement} from 'react-navigation-shared-element'
 import { IconButton, HorizontalCourseCard, LineDivider, CategoryCard } from '../../components';
 import { COLORS, FONTS, SIZES, images, icons, dummyData } from '../../../constants';
 
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
-const CourseListing = (navigation) => {
+//const HEADER_HEIGHT = 250
 
-  const route = useRoute()
+const CourseListing = ({navigation, route}) => {
   const {category, sharedElementPrefix} = route.params
+
+  const flatListRef = React.useRef()
+  const scrollY = useSharedValue(0)
+  const onScroll = useAnimatedScrollHandler((event) =>{
+    scrollY.value = event.contentInset.y
+  })
 
   function backHandler(){
     navigation.goBack()
-
   }
 
+  function renderResults(){
+    return(
+      <Animated.FlatList
+      ref={flatListRef}
+      data={dummyData.courses_list_2}
+      keyExtractor={item => `Results-${item.id}`}
+      contentContainerStyle={{
+        paddingHorizontal: SIZES.padding
+      }}
+      showsHorizontalScrollIndicator={false}
+      scrollEventThrottle={16}
+      keyboardDismissMode="on-drag"
+      onScroll={onScroll}
+
+      ListHeaderComponent={
+        <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: 270,
+          marginBottom: SIZES.base
+        }}
+        >
+          {/* Results */}
+          <Text
+          style={{
+            flex: 1,
+            fontSize: 16,
+            lineHeight: 22
+          }}
+          >
+            5,234 Results
+          </Text>
+
+          {/* Filter Button */}
+          <IconButton
+            icon={icons.filter}
+            iconStyle={{
+              width: 20,
+              height: 20
+            }}
+            containerStyle={{
+              width: 40,
+              height: 40,
+              alignItems: 'center',
+              justifyContent:'center',
+              borderRadius: 10,
+              backgroundColor: COLORS.primary
+            }}
+          />
+
+
+        </View>
+      }
+      
+      renderItem={({item, index})=>(
+        <HorizontalCourseCard
+          course={item}
+          containerStyle={{
+            marginVertical: SIZES.padding,
+            marginTop: index == 0 ? SIZES.radius :
+            SIZES.padding
+          }}
+        />
+
+      )}
+
+      ItemSeparatorComponent={()=>(
+        <LineDivider
+        lineStyle={{
+          backgroundColor: COLORS.gray20
+        }}
+        />
+      )}
+
+
+      />
+    )
+  }
+
+
+
   function renderHeader(){
+
+
     return(
       <Animated.View
       style={{
@@ -127,6 +216,9 @@ const CourseListing = (navigation) => {
         
     }}
     >
+      {/* Results */}
+      {renderResults()}
+
       {/* Header */}
       {renderHeader()}
 
@@ -137,8 +229,8 @@ const CourseListing = (navigation) => {
   
 }
 
-CourseListing.sharedElement = (otherRoute, showing)=>{
-  const route = useRoute()
+CourseListing.sharedElements = (route,otherRoute, showing)=>{
+  //const route = useRoute()
 
   const {category,sharedElementPrefix } = route.params
 
