@@ -229,21 +229,21 @@ const CourseListing = ({navigation, route}) => {
   
 }
 
-CourseListing.sharedElements = (route,otherRoute, showing)=>{
-  //const route = useRoute()
+// CourseListing.sharedElements = (route,otherRoute, showing)=>{
+//   //const route = useRoute()
 
-  const {category,sharedElementPrefix } = route.params
+//   const {category,sharedElementPrefix } = route.params
 
-  return [
-    {
-      id: `${sharedElementPrefix}-CategoryCard-Bg-${category?.id}`
-    },
-    {
-      id: `${sharedElementPrefix}-CategoryCard-Title-${category?.id}`
-    }
+//   return [
+//     {
+//       id: `${sharedElementPrefix}-CategoryCard-Bg-${category?.id}`
+//     },
+//     {
+//       id: `${sharedElementPrefix}-CategoryCard-Title-${category?.id}`
+//     }
 
 
-  ]
-}
+//   ]
+// }
 
 export default CourseListing
